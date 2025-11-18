@@ -27,15 +27,22 @@ class Validator:
         complete_df = pd.concat([X, y], axis=1)
 
         for val in complete_df.values.flatten():
+<<<<<<< HEAD
             if np.isnan(val) or np.isinf(val):
+=======
+            if np.isnan(val) or np.isinf(val) or not val:
+>>>>>>> 4c4821f0521bf293b609f328d1ddf0e9fbf48f74
                 raise ValueError('Check the values of your data, there could be NaNs, inf or empty values.')
 
     @staticmethod
     def _check_sizes(X: pd.DataFrame | pd.Series):
 
+<<<<<<< HEAD
         if X.values.shape == (0, 0):
             raise ValueError("Your Data can't be empty")
 
+=======
+>>>>>>> 4c4821f0521bf293b609f328d1ddf0e9fbf48f74
         cols = X.shape[1]
         rows = X.shape[0]
 
@@ -71,12 +78,15 @@ class Validator:
             if abs(val) > 0.8 and abs(val) < 1:
                 warnings.warn("There are clear signs of colinearity on your data, try using features that ain't correlated between them.")
 
+<<<<<<< HEAD
         XTX = X.T @ X
         det = np.linalg.det(XTX)
 
         if det == 0:
             raise ValueError('Your feature matrix is singular, which means there are severe colinearity problems.')
 
+=======
+>>>>>>> 4c4821f0521bf293b609f328d1ddf0e9fbf48f74
     @staticmethod
     def _validate(X: pd.DataFrame | pd.Series, y: pd.DataFrame | pd.Series):
 
@@ -84,8 +94,14 @@ class Validator:
         Validator._check_values(X, y)
         Validator._check_sizes(X)
         Validator._check_features(X, y)
+<<<<<<< HEAD
 
         if isinstance(X, pd.DataFrame) and X.shape[1] > 1:
+=======
+        Validator._check_scaled(X)
+
+        if isinstance(X, pd.DataFrame):
+>>>>>>> 4c4821f0521bf293b609f328d1ddf0e9fbf48f74
             Validator._check_duplicates(X)
             Validator._check_colinearity(X)
 
@@ -118,11 +134,18 @@ class CorrChecker:
 
         df = pd.concat([X, y], axis=1)
         corrs = df.corr().iloc[:, -1]
+        ws = 0
 
         for col, corr in zip(corrs.index, corrs):
             corr = np.round(corr, 2)
+<<<<<<< HEAD
             if abs(corr) < 0.3:
                 warnings.warn('WARNING. Check the correlation between your features and the target variable.')
+=======
+            if abs(corr) < 0.3 and ws == 0:
+                warnings.warn('Check the correlation between your features and the target variable.')
+                print(f'{col} has a low correlation with the target variable. Corr: {corr}')
+>>>>>>> 4c4821f0521bf293b609f328d1ddf0e9fbf48f74
 
 
 class LinearRegressor:
@@ -171,7 +194,11 @@ class LinearRegressor:
         '''
             This method predicts the test set using the weights and the Bias.
         '''
+<<<<<<< HEAD
         X = Preprocessor._convert_data(X, None, train=False)
+=======
+        X = Preprocessor._convert_data(X, np.array([1]), train=False)
+>>>>>>> 4c4821f0521bf293b609f328d1ddf0e9fbf48f74
 
         pred = X @ self.w + self.b
         return pred
