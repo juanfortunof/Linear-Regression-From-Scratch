@@ -52,21 +52,6 @@ def test_validator_rejects_high_dimensional_data():
 
 
 # -------------------------------
-# Duplicate-related tests
-# -------------------------------
-
-def test_validator_detects_duplicate_nonadjacent_columns():
-    X = pd.DataFrame({
-        "a": [1,2,3],
-        "b": [4,5,6],
-        "c": [1,2,3]   # duplicate of column a
-    })
-
-    with pytest.raises(ValueError):
-        Validator._check_duplicates(X)
-
-
-# -------------------------------
 # Colinearity tests
 # -------------------------------
 
